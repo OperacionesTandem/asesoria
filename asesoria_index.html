@@ -1,0 +1,476 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Asesoría Gastronómica · Tándem</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:wght@400;500;600;700&family=Inter:wght@300;400;500;600&display=swap" rel="stylesheet">
+<style>
+  :root{
+    --beige:#dfdbcf;
+    --beige-claro:#efece4;
+    --negro:#0c0c0c;
+    --tierra:#583924;
+    --brasa:#B76635;
+    --naranja:#ED6D1F;
+    --naranja-suave:#f6a878;
+    --gris:#4C4D3E;
+    --blanco:#ffffff;
+    --error:#b3261e;
+    --ok:#3a7d44;
+    --sombra:0 8px 30px rgba(12,12,12,.10);
+    --radio:14px;
+  }
+  *{box-sizing:border-box;margin:0;padding:0}
+  html,body{background:var(--beige);color:var(--negro);font-family:'Inter',system-ui,sans-serif;-webkit-font-smoothing:antialiased}
+  body{padding:0 0 60px}
+  .wrap{max-width:680px;margin:0 auto;padding:0 18px}
+
+  /* ---------- CABECERA ---------- */
+  header{
+    background:var(--negro);
+    color:var(--blanco);
+    padding:46px 18px 40px;
+    text-align:center;
+    position:relative;
+    overflow:hidden;
+  }
+  header::after{
+    content:"";position:absolute;left:0;right:0;bottom:0;height:4px;
+    background:linear-gradient(90deg,var(--naranja),var(--brasa));
+  }
+  .marca{
+    font-family:'Cormorant Garamond',serif;
+    font-weight:600;letter-spacing:.18em;
+    font-size:13px;text-transform:uppercase;
+    color:var(--naranja-suave);margin-bottom:14px;
+  }
+  header h1{
+    font-family:'Cormorant Garamond',serif;
+    font-weight:600;font-size:40px;line-height:1.05;letter-spacing:.01em;
+  }
+  header h1 .light{font-style:italic;font-weight:500;color:var(--beige)}
+  header p.sub{
+    margin-top:16px;font-size:15px;font-weight:300;
+    color:#cfcabd;max-width:480px;margin-left:auto;margin-right:auto;line-height:1.5;
+  }
+
+  /* ---------- TARJETA ---------- */
+  main{margin-top:-22px}
+  .card{
+    background:var(--blanco);border-radius:var(--radio);box-shadow:var(--sombra);
+    padding:30px 26px;margin-bottom:20px;
+  }
+  .card.intro{border-top:4px solid var(--naranja)}
+  .seccion-titulo{
+    display:flex;align-items:center;gap:10px;margin-bottom:6px;
+  }
+  .seccion-num{
+    background:var(--naranja);color:#fff;font-weight:600;font-size:13px;
+    width:26px;height:26px;border-radius:50%;display:grid;place-items:center;flex:none;
+  }
+  .seccion-titulo h2{
+    font-family:'Cormorant Garamond',serif;font-size:24px;font-weight:600;color:var(--tierra);
+  }
+  .seccion-desc{font-size:13.5px;color:#6a6a62;margin:0 0 22px 36px;line-height:1.45}
+
+  /* ---------- CAMPOS ---------- */
+  .campo{margin-bottom:20px}
+  .campo > label{
+    display:block;font-size:14px;font-weight:500;margin-bottom:8px;color:var(--negro);
+  }
+  .campo .req{color:var(--naranja);margin-left:2px}
+  .campo .hint{display:block;font-weight:400;font-size:12.5px;color:#8a8a82;margin-top:2px}
+  input[type=text],input[type=email],input[type=tel],input[type=number],textarea,select{
+    width:100%;font-family:inherit;font-size:15px;color:var(--negro);
+    background:var(--beige-claro);border:1.5px solid transparent;border-radius:10px;
+    padding:13px 14px;transition:border-color .15s,background .15s;
+  }
+  textarea{resize:vertical;min-height:96px;line-height:1.5}
+  input:focus,textarea:focus,select:focus{
+    outline:none;border-color:var(--naranja);background:#fff;
+  }
+  select{appearance:none;background-image:url("data:image/svg+xml;utf8,<svg xmlns='http://www.w3.org/2000/svg' width='14' height='14' viewBox='0 0 24 24' fill='none' stroke='%23583924' stroke-width='2.5'><path d='M6 9l6 6 6-6'/></svg>");background-repeat:no-repeat;background-position:right 14px center;padding-right:40px;cursor:pointer}
+
+  /* opciones tipo "pills" para selección visual */
+  .opciones{display:flex;flex-direction:column;gap:9px}
+  .opcion{
+    position:relative;display:flex;align-items:flex-start;gap:11px;
+    background:var(--beige-claro);border:1.5px solid transparent;border-radius:10px;
+    padding:12px 14px;cursor:pointer;transition:all .15s;
+  }
+  .opcion:hover{border-color:var(--naranja-suave)}
+  .opcion input{position:absolute;opacity:0;pointer-events:none}
+  .opcion .marca-radio{
+    width:19px;height:19px;border-radius:50%;border:2px solid #b6b1a4;flex:none;margin-top:1px;
+    display:grid;place-items:center;transition:all .15s;
+  }
+  .opcion .marca-radio::after{content:"";width:9px;height:9px;border-radius:50%;background:var(--naranja);transform:scale(0);transition:transform .15s}
+  .opcion input:checked ~ .marca-radio{border-color:var(--naranja)}
+  .opcion input:checked ~ .marca-radio::after{transform:scale(1)}
+  .opcion input:checked ~ .txt{color:var(--tierra);font-weight:500}
+  .opcion:has(input:checked){border-color:var(--naranja);background:#fff}
+  .opcion .txt{font-size:14.5px;line-height:1.35}
+
+  /* ---------- CONFIDENCIALIDAD ---------- */
+  .confi{
+    background:var(--beige-claro);border-left:3px solid var(--brasa);
+    border-radius:8px;padding:16px 18px;font-size:13px;line-height:1.55;color:#54534b;
+    max-height:200px;overflow-y:auto;margin-bottom:16px;
+  }
+  .confi strong{color:var(--tierra)}
+  .check-acepto{display:flex;align-items:flex-start;gap:11px;cursor:pointer}
+  .check-acepto input{position:absolute;opacity:0}
+  .check-acepto .box{
+    width:21px;height:21px;border-radius:6px;border:2px solid #b6b1a4;flex:none;margin-top:1px;
+    display:grid;place-items:center;transition:all .15s;
+  }
+  .check-acepto .box svg{width:13px;height:13px;stroke:#fff;stroke-width:3;fill:none;opacity:0;transition:opacity .15s}
+  .check-acepto input:checked ~ .box{background:var(--naranja);border-color:var(--naranja)}
+  .check-acepto input:checked ~ .box svg{opacity:1}
+  .check-acepto .lbl{font-size:14px;font-weight:500}
+
+  /* ---------- BOTÓN ---------- */
+  .acciones{padding:6px 0 0}
+  button.enviar{
+    width:100%;background:var(--negro);color:#fff;border:none;border-radius:12px;
+    font-family:'Inter',sans-serif;font-size:16px;font-weight:600;letter-spacing:.02em;
+    padding:17px;cursor:pointer;transition:transform .12s,background .15s;
+    display:flex;align-items:center;justify-content:center;gap:10px;
+  }
+  button.enviar:hover{background:var(--tierra)}
+  button.enviar:active{transform:scale(.985)}
+  button.enviar:disabled{opacity:.55;cursor:not-allowed}
+  .spinner{width:18px;height:18px;border:2.5px solid rgba(255,255,255,.35);border-top-color:#fff;border-radius:50%;animation:giro .7s linear infinite;display:none}
+  @keyframes giro{to{transform:rotate(360deg)}}
+  .nota-pie{text-align:center;font-size:12px;color:#8a8a82;margin-top:16px;line-height:1.5}
+
+  /* ---------- ERROR ---------- */
+  .campo.invalido input,.campo.invalido textarea,.campo.invalido select{border-color:var(--error);background:#fdf3f2}
+  .msg-error{display:none;color:var(--error);font-size:12.5px;margin-top:6px;font-weight:500}
+  .campo.invalido .msg-error{display:block}
+
+  /* ---------- PANTALLA DE ÉXITO ---------- */
+  .exito{display:none;text-align:center;padding:50px 26px}
+  .exito .icono{
+    width:74px;height:74px;border-radius:50%;background:var(--ok);margin:0 auto 22px;
+    display:grid;place-items:center;animation:pop .4s ease;
+  }
+  @keyframes pop{0%{transform:scale(.4);opacity:0}100%{transform:scale(1);opacity:1}}
+  .exito .icono svg{width:38px;height:38px;stroke:#fff;stroke-width:3;fill:none}
+  .exito h2{font-family:'Cormorant Garamond',serif;font-size:30px;color:var(--tierra);margin-bottom:12px}
+  .exito p{font-size:15px;color:#54534b;line-height:1.55;max-width:420px;margin:0 auto 8px}
+  .exito .ref{display:inline-block;margin-top:18px;background:var(--beige-claro);border-radius:8px;padding:10px 18px;font-size:13px;color:var(--tierra);font-weight:600}
+
+  .logos-pie{text-align:center;margin-top:36px;opacity:.5;font-size:11px;letter-spacing:.15em;text-transform:uppercase;color:var(--gris)}
+
+  @media(max-width:520px){
+    header h1{font-size:32px}
+    .card{padding:24px 18px}
+  }
+</style>
+</head>
+<body>
+
+<header>
+  <div class="marca">Tándem Gastronómico</div>
+  <h1>Asesoría &amp; Mentoría<br><span class="light">gastronómica</span></h1>
+  <p class="sub">Cuéntanos sobre tu proyecto. Esta información nos permite preparar una primera propuesta a tu medida antes de hablar contigo.</p>
+</header>
+
+<main class="wrap">
+
+  <!-- FORMULARIO -->
+  <form id="form" novalidate>
+
+    <!-- SECCIÓN 1: TU PROYECTO -->
+    <div class="card">
+      <div class="seccion-titulo"><span class="seccion-num">1</span><h2>Tu proyecto</h2></div>
+      <p class="seccion-desc">Para entender en qué punto se encuentra tu negocio.</p>
+
+      <div class="campo">
+        <label>¿En qué estado se encuentra tu proyecto? <span class="req">*</span></label>
+        <select name="estadoProyecto" required>
+          <option value="" disabled selected>Selecciona una opción…</option>
+          <option>Idea en fase inicial</option>
+          <option>En proceso de apertura</option>
+          <option>En funcionamiento</option>
+          <option>En reestructuración / cambio</option>
+        </select>
+        <span class="msg-error">Selecciona el estado de tu proyecto.</span>
+      </div>
+
+      <div class="campo">
+        <label>¿Qué tipo de negocio gastronómico es? <span class="req">*</span></label>
+        <select name="tipoNegocio" required>
+          <option value="" disabled selected>Selecciona una opción…</option>
+          <option>Restaurante</option>
+          <option>Bar / Cafetería</option>
+          <option>Cafetería / Pastelería</option>
+          <option>Delivery</option>
+          <option>Catering / Eventos</option>
+          <option>Otro</option>
+        </select>
+        <span class="msg-error">Selecciona el tipo de negocio.</span>
+      </div>
+
+      <div class="campo">
+        <label>¿Cuánto personal tienes en plantilla?
+          <span class="hint">Número aproximado de personas.</span>
+        </label>
+        <input type="text" name="personal" placeholder="Ej. 9">
+      </div>
+
+      <div class="campo">
+        <label>¿Cuántos comensales atiendes por servicio?
+          <span class="hint">Media aproximada. Si aún no abres, indica lo previsto.</span>
+        </label>
+        <input type="text" name="comensales" placeholder="Ej. 40/50">
+      </div>
+
+      <div class="campo">
+        <label>¿Cuál es tu horario de apertura?</label>
+        <input type="text" name="horario" placeholder="Ej. Martes a sábado de 13 a 16 y de 20 a 00">
+      </div>
+    </div>
+
+    <!-- SECCIÓN 2: GESTIÓN ACTUAL -->
+    <div class="card">
+      <div class="seccion-titulo"><span class="seccion-num">2</span><h2>Cómo gestionas hoy</h2></div>
+      <p class="seccion-desc">No te preocupes si algo no lo tienes resuelto: precisamente para eso estamos.</p>
+
+      <div class="campo">
+        <label>¿Tienes calculado el food cost de tu negocio?</label>
+        <select name="foodcost">
+          <option value="" disabled selected>Selecciona una opción…</option>
+          <option>Sí</option>
+          <option>En proceso</option>
+          <option>No</option>
+          <option>Ni idea de qué es</option>
+        </select>
+      </div>
+
+      <div class="campo">
+        <label>¿Dispones de fichas técnicas o recetas documentadas de tus elaboraciones?</label>
+        <select name="fichas">
+          <option value="" disabled selected>Selecciona una opción…</option>
+          <option>Sí, todas</option>
+          <option>Algunas</option>
+          <option>No</option>
+        </select>
+      </div>
+
+      <div class="campo">
+        <label>¿Cuentas con equipo de comunicación y marketing o agencia?</label>
+        <select name="marketing">
+          <option value="" disabled selected>Selecciona una opción…</option>
+          <option>Sí, interno</option>
+          <option>Sí, externo</option>
+          <option>No</option>
+        </select>
+      </div>
+    </div>
+
+    <!-- SECCIÓN 3: QUÉ NECESITAS -->
+    <div class="card">
+      <div class="seccion-titulo"><span class="seccion-num">3</span><h2>Qué necesitas</h2></div>
+      <p class="seccion-desc">El corazón de tu solicitud. Cuánto más concreto, mejor podremos ayudarte.</p>
+
+      <div class="campo" id="campo-tipo">
+        <label>¿Qué tipo de asesoría estás buscando? <span class="req">*</span></label>
+        <div class="opciones">
+          <label class="opcion"><input type="radio" name="tipoAsesoria" value="Asesoría gastronómica (operativa, procesos, gestión de cocina)" required><span class="marca-radio"></span><span class="txt">Asesoría gastronómica <em style="font-style:normal;color:#8a8a82">— operativa, procesos, gestión de cocina</em></span></label>
+          <label class="opcion"><input type="radio" name="tipoAsesoria" value="Asesoría dulce (postres, cartas dulces, optimización del área pastelera)"><span class="marca-radio"></span><span class="txt">Asesoría dulce <em style="font-style:normal;color:#8a8a82">— postres, cartas dulces, área pastelera</em></span></label>
+          <label class="opcion"><input type="radio" name="tipoAsesoria" value="Asesoría integral"><span class="marca-radio"></span><span class="txt">Asesoría integral</span></label>
+          <label class="opcion"><input type="radio" name="tipoAsesoria" value="Otro"><span class="marca-radio"></span><span class="txt">Otro <em style="font-style:normal;color:#8a8a82">— lo especifico abajo</em></span></label>
+        </div>
+        <span class="msg-error">Selecciona el tipo de asesoría.</span>
+      </div>
+
+      <div class="campo" id="campo-otro" style="display:none">
+        <label>Especifica qué tipo de asesoría necesitas</label>
+        <input type="text" name="tipoOtro" placeholder="Describe brevemente…">
+      </div>
+
+      <div class="campo">
+        <label>Cuéntanos cuáles son tus principales retos o necesidades en este momento. <span class="req">*</span></label>
+        <textarea name="retos" required placeholder="Describe tu situación, qué quieres mejorar y qué esperas de nosotros."></textarea>
+        <span class="msg-error">Cuéntanos brevemente tus necesidades.</span>
+      </div>
+
+      <div class="campo">
+        <label>¿Cómo nos has conocido?</label>
+        <input type="text" name="comoConociste" placeholder="Ej. Google, recomendación, redes sociales…">
+      </div>
+    </div>
+
+    <!-- SECCIÓN 4: DATOS DE CONTACTO -->
+    <div class="card">
+      <div class="seccion-titulo"><span class="seccion-num">4</span><h2>Datos de contacto</h2></div>
+      <p class="seccion-desc">Para poder responderte y agendar una primera conversación.</p>
+
+      <div class="campo">
+        <label>Nombre del proyecto / negocio <span class="req">*</span></label>
+        <input type="text" name="nombreProyecto" required placeholder="Ej. Le Fou Sagunto">
+        <span class="msg-error">Indica el nombre del proyecto.</span>
+      </div>
+
+      <div class="campo">
+        <label>Persona de contacto y cargo <span class="req">*</span></label>
+        <input type="text" name="personaContacto" required placeholder="Ej. Edgar Betoret, gerente">
+        <span class="msg-error">Indica la persona de contacto.</span>
+      </div>
+
+      <div class="campo">
+        <label>Email <span class="req">*</span></label>
+        <input type="email" name="email" required placeholder="tucorreo@ejemplo.com">
+        <span class="msg-error">Introduce un email válido.</span>
+      </div>
+
+      <div class="campo">
+        <label>Teléfono <span class="req">*</span></label>
+        <input type="tel" name="telefono" required placeholder="+34 600 00 00 00">
+        <span class="msg-error">Introduce un teléfono de contacto.</span>
+      </div>
+
+      <div class="campo">
+        <label>¿Qué horario prefieres que te contactemos?
+          <span class="hint">Días y franja horaria que mejor te vengan.</span>
+        </label>
+        <input type="text" name="horarioContacto" placeholder="Ej. De lunes a miércoles, de 10 a 13:30">
+      </div>
+    </div>
+
+    <!-- SECCIÓN 5: CONFIDENCIALIDAD -->
+    <div class="card">
+      <div class="seccion-titulo"><span class="seccion-num">5</span><h2>Confidencialidad</h2></div>
+      <p class="seccion-desc">Tu información está protegida.</p>
+
+      <div class="confi">
+        En <strong>Tándem Gastronómico</strong> entendemos que el trabajo conjunto requiere confianza absoluta. Desde el primer contacto y durante las sesiones de asesoría o mentoría podremos analizar información sensible sobre vuestro negocio: presupuestos, rentabilidad, ingresos, inversiones, contactos, así como cualquier dato propio o de terceros que deseéis compartir para avanzar en el proyecto.<br><br>
+        Por ello, ambas partes nos comprometemos a aceptar y cumplir este acuerdo de confidencialidad. Todos los datos que nos facilitéis estarán protegidos por ley y no serán revelados, comunicados ni cedidos a terceros bajo ningún concepto. Para nosotros es esencial cuidaros, que os sintáis seguros y respetados, y garantizar que toda la información que compartáis se trate con máxima discreción.<br><br>
+        Por otro lado os pedimos vuestro consentimiento para, en un futuro y siempre de manera consensuada, poder mencionar el trabajo realizado juntos (referencias en web, logo o menciones puntuales en comunicación o prensa, siempre acordadas previamente). En ningún caso se divulgará información confidencial.<br><br>
+        Este acuerdo refleja nuestro compromiso con la profesionalidad, el respeto y la construcción de relaciones basadas en la confianza.
+      </div>
+
+      <label class="check-acepto" id="campo-acepto">
+        <input type="checkbox" name="acepto" required>
+        <span class="box"><svg viewBox="0 0 24 24"><path d="M5 13l4 4L19 7"/></svg></span>
+        <span class="lbl">He leído y acepto el acuerdo de confidencialidad <span class="req">*</span></span>
+      </label>
+      <span class="msg-error" id="error-acepto" style="margin-left:32px">Debes aceptar para poder enviar la solicitud.</span>
+    </div>
+
+    <!-- ACCIONES -->
+    <div class="acciones">
+      <button type="submit" class="enviar" id="btnEnviar">
+        <span class="spinner" id="spinner"></span>
+        <span id="btnTexto">Enviar solicitud</span>
+      </button>
+      <p class="nota-pie">Al enviar, recibirás una copia en tu email y nuestro equipo se pondrá en contacto contigo.</p>
+    </div>
+  </form>
+
+  <!-- PANTALLA DE ÉXITO -->
+  <div class="card exito" id="exito">
+    <div class="icono"><svg viewBox="0 0 24 24"><path d="M5 13l4 4L19 7"/></svg></div>
+    <h2>¡Solicitud recibida!</h2>
+    <p>Gracias por confiar en Tándem Gastronómico. Hemos enviado una copia de tu solicitud a tu email y nuestro equipo la revisará para ponerse en contacto contigo en el horario que nos has indicado.</p>
+    <div class="ref" id="refTicket"></div>
+  </div>
+
+  <div class="logos-pie">Doña Petrona · Maipi · La Central de Postres · La Oficina · Fierro</div>
+
+</main>
+
+<script>
+  // ════════════════════════════════════════════════════
+  //  CONFIGURACIÓN — pega aquí la URL del Apps Script
+  //  tras desplegarlo (Implementar → Aplicación web)
+  // ════════════════════════════════════════════════════
+  const API_URL = "PEGAR_URL_NUEVA_AQUI";
+
+  const form     = document.getElementById('form');
+  const btn      = document.getElementById('btnEnviar');
+  const spinner  = document.getElementById('spinner');
+  const btnTexto = document.getElementById('btnTexto');
+
+  // Mostrar/ocultar campo "Otro"
+  document.querySelectorAll('input[name="tipoAsesoria"]').forEach(r=>{
+    r.addEventListener('change',()=>{
+      document.getElementById('campo-otro').style.display = (r.value==='Otro' && r.checked) ? 'block' : 'none';
+    });
+  });
+
+  // Quitar el estado de error al corregir
+  form.querySelectorAll('input,textarea,select').forEach(el=>{
+    el.addEventListener('input',()=>el.closest('.campo')?.classList.remove('invalido'));
+    el.addEventListener('change',()=>el.closest('.campo')?.classList.remove('invalido'));
+  });
+
+  function validar(){
+    let ok = true;
+    // requeridos estándar
+    form.querySelectorAll('[required]').forEach(el=>{
+      if(el.type==='checkbox') return;
+      if(el.type==='radio') return;
+      if(!el.value.trim() || (el.type==='email' && !/^[^@\s]+@[^@\s]+\.[^@\s]+$/.test(el.value))){
+        el.closest('.campo').classList.add('invalido'); ok=false;
+      }
+    });
+    // radio tipoAsesoria
+    if(![...form.querySelectorAll('input[name="tipoAsesoria"]')].some(r=>r.checked)){
+      document.getElementById('campo-tipo').classList.add('invalido'); ok=false;
+    }
+    // checkbox confidencialidad
+    const acepto = form.querySelector('input[name="acepto"]');
+    if(!acepto.checked){
+      document.getElementById('error-acepto').style.display='block'; ok=false;
+    } else {
+      document.getElementById('error-acepto').style.display='none';
+    }
+    if(!ok){
+      const primero = form.querySelector('.invalido') || document.getElementById('error-acepto');
+      primero?.scrollIntoView({behavior:'smooth',block:'center'});
+    }
+    return ok;
+  }
+
+  form.addEventListener('submit', async (e)=>{
+    e.preventDefault();
+    if(!validar()) return;
+
+    btn.disabled = true;
+    spinner.style.display = 'inline-block';
+    btnTexto.textContent = 'Enviando…';
+
+    const fd = new FormData(form);
+    const datos = Object.fromEntries(fd.entries());
+    datos.acepto = form.querySelector('input[name="acepto"]').checked ? 'ACEPTO' : '';
+
+    try{
+      await fetch(API_URL, {
+        method:'POST',
+        mode:'no-cors',
+        headers:{'Content-Type':'text/plain;charset=utf-8'},
+        body: JSON.stringify(datos)
+      });
+      // con no-cors no podemos leer la respuesta; asumimos éxito
+      const ref = 'ASE-' + new Date().toISOString().slice(0,10).replace(/-/g,'') + '-' +
+                  Math.floor(1000+Math.random()*9000);
+      form.style.display = 'none';
+      document.getElementById('refTicket').textContent = 'Referencia: ' + ref;
+      document.getElementById('exito').style.display = 'block';
+      window.scrollTo({top:0,behavior:'smooth'});
+    }catch(err){
+      btn.disabled = false;
+      spinner.style.display = 'none';
+      btnTexto.textContent = 'Enviar solicitud';
+      alert('No se ha podido enviar la solicitud. Revisa tu conexión e inténtalo de nuevo.');
+    }
+  });
+</script>
+</body>
+</html>
